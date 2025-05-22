@@ -2,18 +2,60 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login | Cadastro</title>
+  <!-- Define o conjunto de caracteres como UTF-8, garantindo suporte a acentuação e símbolos. -->
 
-  <!-- ÍCONES do Font Awesome -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!-- Ajusta a largura da viewport à largura do dispositivo e define o zoom inicial em 100%. -->
+  
+  <!-- Segurança: evita que o navegador "adivinhe" o tipo de conteúdo (MIME sniffing) -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <!-- 
+    Impede ataques onde o navegador tenta “adivinhar” o tipo de arquivo
+    e pode interpretar scripts maliciosos como imagens ou vice-versa.
+  -->
+
+  <!-- Política de referenciador: não envia referrer -->
+  <meta name="referrer" content="no-referrer">
+  <!-- 
+    Não envia o cabeçalho Referer em requisições,
+    evitando vazar URLs internas e parâmetros sensíveis.
+  -->
+
+  <!-- Política de permissões: bloqueia APIs não utilizadas -->
+  <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()">
+  <!-- 
+    Bloqueia o acesso a geolocalização, microfone e câmera
+    por padrão, reduzindo vetores de ataque.
+  -->
+
+  <!-- Content Security Policy (CSP): só carrega recursos próprios -->
+  <meta http-equiv="Content-Security-Policy"
+        content="
+          default-src 'self';
+          script-src   'self';
+          style-src    'self';
+          img-src      'self' data:;
+          font-src     'self';
+          connect-src  'self';
+          frame-ancestors 'none';
+        ">
+  <!-- 
+    Mitiga ataques de XSS e injeção de código,
+    permitindo apenas recursos carregados de origens definidas.
+  -->
+
+  <title>Login | Cadastro</title>
+  <!-- Título que aparece na aba do navegador. -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <!-- Importa ícones da biblioteca Font Awesome de um CDN confiável. -->
 
   <link rel="stylesheet" href="style.css" />
+  <!-- Carrega seu arquivo de estilos CSS local. -->
 </head>
 <body>
-
   <div class="container" id="container">
-
+    <!-- Cadastro -->
     <div class="form-container sign-up">
       <form id="register-form">
         <h1>Criar Conta</h1>
@@ -24,6 +66,7 @@
       </form>
     </div>
 
+    <!-- Login -->
     <div class="form-container sign-in">
       <form id="login-form">
         <h1>Entrar</h1>
@@ -34,19 +77,19 @@
       </form>
     </div>
 
+    <!-- Recuperação de senha -->
     <div class="form-container forgot-password">
       <form id="forgot-form">
         <h1>Recupere sua senha</h1>
         <input type="email" placeholder="Seu email" id="forgot-email" required />
-
         <input type="password" placeholder="Digite sua nova senha" id="new-password" style="display:none;" />
         <input type="password" placeholder="Confirme sua nova senha" id="confirm-password" style="display:none;" />
-
         <button type="submit" id="forgot-submit">Validar Email</button>
         <a href="#" id="back-to-login">Voltar ao login</a>
       </form>
     </div>
 
+    <!-- Painéis -->
     <div class="toggle-container">
       <div class="toggle">
         <div class="toggle-panel toggle-left">
@@ -56,21 +99,19 @@
         </div>
         <div class="toggle-panel toggle-right">
           <h1>Olá, amigo!</h1>
-          <p>Registre-se para aproveitar seu Cinema!</p>
+          <p>Registre-se para aproveitar nossos recursos</p>
           <button class="hidden" id="register">Cadastrar</button>
         </div>
       </div>
     </div>
-
   </div>
 
-  <!-- Tela de boas-vindas exibida após login bem-sucedido -->
-  <a href="CINEMA/cinema.html">
-    <div class="welcome-screen" id="welcome-screen" style="display: none;">
-      <h1>Bem-vindo(a)!</h1>
-      <p>Você entrou com sucesso.</p>
-    </div>
-  </a>
+  
+ <div class="welcome-screen" id="welcome-screen" style="display: none;">
+    <h1>Bem-vindo(a)!</h1>
+    <p>Você entrou com sucesso.</p>
+    <a href="CINEMA/index.html">Ir para Cinema</a>
+  </div>
 
   <script src="script.js"></script>
 </body>

@@ -193,3 +193,54 @@ input {
   border-radius: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input[type="password"],
+.input-wrapper input[type="text"] {
+  padding-right: 42px !important;
+  margin: 0;
+}
+
+/* Olhinho como ícone, sem aparência de botão */
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 28px;
+  width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  cursor: pointer;
+  z-index: 2;
+  outline: none;
+  box-shadow: none;
+  appearance: none;
+}
+
+.toggle-password svg {
+  width: 22px;
+  height: 22px;
+  stroke: #888;
+  background: none;
+  pointer-events: none; /* O clique será no .toggle-password, não no SVG */
+}
+
+.toggle-password:active,
+.toggle-password:focus {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+

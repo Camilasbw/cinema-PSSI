@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const user = { name, email, password };
 
-    // ⚠️ localStorage não é seguro para dados sensíveis. Use backend seguro em produção.
+    // localStorage não é seguro para dados sensíveis. Use backend seguro em produção.
     localStorage.setItem('user', JSON.stringify(user));
     setCookie('userEmail', email, 7); // Cookie limitado apenas ao email
     alert('Conta criada com sucesso!');

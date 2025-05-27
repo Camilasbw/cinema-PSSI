@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Pegando os elementos principais
   const container = document.getElementById('container');
   const registerBtn = document.getElementById('register');
   const loginBtn = document.getElementById('login');
@@ -6,14 +7,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const forgotLink = document.getElementById('forgot-password-link');
   const backToLogin = document.getElementById('back-to-login');
 
-  // ----- Saneamento de entradas -----
+  // Evita entrada maliciosa (injeção HTML)
   function sanitize(input) {
     const div = document.createElement('div');
     div.textContent = input;
     return div.innerHTML;
   }
 
-  // ----- Cookies seguros -----
+  // Setando cookies com segurança básica
   function setCookie(name, value, days) {
     const d = new Date();
     d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
@@ -29,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
 
-  // Alternância entre telas
+  // Troca de telas (login/cadastro/esqueci)
   welcomeScreen.style.display = 'none';
 
   registerBtn.addEventListener('click', () => {
@@ -54,13 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
     resetarRecuperacao();
   });
 
-  // ----- Validação de senha forte -----
+  // Verifica se a senha é forte
   function senhaForte(senha) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     return regex.test(senha);
   }
 
-  // ----- Cadastro -----
+  // Cadastro
   document.getElementById('register-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const name = sanitize(document.getElementById('reg-name').value.trim());
@@ -73,15 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const user = { name, email, password };
-
-    // localStorage não é seguro para dados sensíveis. Use backend seguro em produção.
-    localStorage.setItem('user', JSON.stringify(user));
-    setCookie('userEmail', email, 7); // Cookie limitado apenas ao email
+    localStorage.setItem('user', JSON.stringify(user)); // ⚠️ Só pra testes
+    setCookie('userEmail', email, 7);
     alert('Conta criada com sucesso!');
     container.classList.remove('active');
   });
 
-  // ----- Login -----
+  // Login
   document.getElementById('login-form').addEventListener('submit', (e) => {
     e.preventDefault();
     const email = document.getElementById('login-email').value;
@@ -97,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ----- Recuperação de senha com token seguro -----
+  // Recuperação de senha com etapas (email > token > nova senha)
   const forgotForm = document.getElementById('forgot-form');
   const forgotEmail = document.getElementById('forgot-email');
   const newPassword = document.getElementById('new-password');
@@ -216,9 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ----- Força da senha e requisitos -----
+  // Feedback visual da força da senha
   const regPassword = document.getElementById('reg-password');
-
   let barraForca = document.getElementById('password-strength-bar');
   let requisitos = document.getElementById('password-requirements');
 
@@ -262,12 +260,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const temNumero = /\d/.test(senha);
     const temSimbolo = /[\W_]/.test(senha);
 
+    // Atualiza os requisitos
     document.getElementById('req-length').style.color = temLength ? 'green' : 'red';
     document.getElementById('req-maiuscula').style.color = temMaiuscula ? 'green' : 'red';
     document.getElementById('req-minuscula').style.color = temMinuscula ? 'green' : 'red';
     document.getElementById('req-numero').style.color = temNumero ? 'green' : 'red';
     document.getElementById('req-simbolo').style.color = temSimbolo ? 'green' : 'red';
 
+    // Calcula força da senha
     forca += temLength ? 1 : 0;
     forca += temMaiuscula ? 1 : 0;
     forca += temMinuscula ? 1 : 0;
@@ -279,7 +279,7 @@ document.addEventListener('DOMContentLoaded', () => {
     barraForca.style.background = cores[forca - 1] || '#eee';
   });
 
-  // ----- Olhinho para visualizar senha -----
+  // Botão "olhinho" pra mostrar/esconder senha
   function adicionarOlhoCadastro(inputId) {
     const input = document.getElementById(inputId);
     if (!input) return;
